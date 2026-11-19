@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "apps/web/next.config.js",
+      "use": "@vercel/next",
+      "config": {
+        "includeFiles": ["apps/web/package.json", "apps/web/pnpm-lock.yaml"]
+      }
+    }
+  ],
+  "outputDirectory": "apps/web/.next"
+}
