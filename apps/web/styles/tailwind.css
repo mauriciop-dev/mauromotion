@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    background-color: #06070B;
+    color: #F4F6FF;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  :root {
+    --mm-bg-main: #06070B;
+    --mm-bg-surface: #0F111A;
+    --mm-bg-card: #181B26;
+    --mm-neon-cyan: #00F0FF;
+    --mm-neon-magenta: #FF007A;
+    --mm-neon-yellow: #FFE600;
+    --mm-neon-purple: #9D00FF;
+    --mm-neon-green: #00FF66;
+    --mm-text-primary: #F4F6FF;
+    --mm-text-secondary: #94A3B8;
+    --mm-border-glow: rgba(0, 240, 255, 0.25);
+    --mm-cyan: #00F0FF;
+    --mm-magenta: #FF007A;
+    --mm-yellow: #FFE600;
+    --mm-purple: #9D00FF;
+    --mm-green: #00FF66;
+  }
+
+  /* Custom utilities for MauroMotion */
+  @layer utilities {
+    .mm-card-cyber {
+      background: rgba(24, 27, 38, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5),
+                  inset 0 0 15px rgba(0, 240, 255, 0.05);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mm-card-cyber:hover {
+      border-color: rgba(255, 0, 122, 0.6);
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 12px 40px 0 rgba(255, 0, 122, 0.25),
+                  0 0 20px rgba(0, 240, 255, 0.2);
+    }
+
+    .mm-btn-primary {
+      background: linear-gradient(135deg, #00F0FF 0%, #9D00FF 50%, #FF007A 100%);
+      background-size: 200% 200%;
+      color: #06070B;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+      animation: mm-gradient-shift 4s ease infinite;
+      transition: transform 0.2s ease;
+    }
+
+    .mm-btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(255, 0, 122, 0.7);
+    }
+
+    @keyframes mm-gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Color gradient utilities */
+    .bg-gradient-cyan-magenta {
+      background: linear-gradient(135deg, #00F0FF, #FF007A);
+    }
+
+    .bg-gradient-purple-cyan {
+      background: linear-gradient(135deg, #9D00FF, #00F0FF);
+    }
+  }
+}

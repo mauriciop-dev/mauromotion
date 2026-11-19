@@ -1,0 +1,19 @@
+{
+  "name": "mauromotion",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "dev:backend": "cd services/engine && python main.py",
+    "dev:all": "concurrently \"pnpm --filter web dev\" \"python services/engine/main.py\"",
+    "build": "pnpm --filter web build",
+    "setup:backend": "python setup-backend.py",
+    "install:all": "pnpm install",
+    "clean": "Remove-Item -Recurse -Force node_modules pnpm-lock.yaml apps/web/node_modules",
+    "git:push": "git add . && git commit -m \"Update\" && git push"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

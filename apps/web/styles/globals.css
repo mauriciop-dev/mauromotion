@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 10% 10%;
+    
+    --primary: 260 85% 50%;
+    --primary-foreground: 210 40% 96%;
+    
+    --secondary: 280 65% 50%;
+    --secondary-foreground: 210 40% 96%;
+    
+    --muted: 220 10% 90%;
+    --muted-foreground: 240 10% 40%;
+    
+    --accent: 200 80% 50%;
+    --accent-foreground: 210 40% 96%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 96%;
+    
+    --border: 220 10% 90%;
+    --input: 220 10% 90%;
+    --ring: 220 10% 50%;
+    
+    --radius: 0.5rem;
+    
+    /* MauroMotion custom vars */
+    --mm-bg-main: #06070B;
+    --mm-bg-surface: #0F111A;
+    --mm-bg-card: #181B26;
+    --mm-neon-cyan: #00F0FF;
+    --mm-neon-magenta: #FF007A;
+    --mm-neon-yellow: #FFE600;
+    --mm-neon-purple: #9D00FF;
+    --mm-neon-green: #00FF66;
+    --mm-text-primary: #F4F6FF;
+    --mm-text-secondary: #94A3B8;
+    --mm-border-glow: rgba(0, 240, 255, 0.25);
+    --mm-cyan: #00F0FF;
+    --mm-magenta: #FF007A;
+    --mm-yellow: #FFE600;
+    --mm-purple: #9D00FF;
+    --mm-green: #00FF66;
+  }
+
+  .dark {
+    --background: 210 10% 3%;
+    --foreground: 215 16% 96%;
+    
+    --primary: 260 85% 60%;
+    --primary-foreground: 210 12% 10%;
+    
+    --secondary: 280 70% 65%;
+    --secondary-foreground: 210 12% 10%;
+    
+    --muted: 210 10% 15%;
+    --muted-foreground: 215 10% 60%;
+    
+    --accent: 200 90% 60%;
+    --accent-foreground: 210 12% 10%;
+    
+    --destructive: 0 72% 71%;
+    --destructive-foreground: 210 10% 10%;
+    
+    --border: 210 10% 20%;
+    --input: 210 10% 22%;
+    --ring: 260 80% 60%;
+  }
+
+  .font-body {
+    font-family: var(--font-grotesk);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer utilities {
+  .text-bounce {
+    animation: text-bounce 2s infinite;
+  }
+
+  @keyframes text-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}

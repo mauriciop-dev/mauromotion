@@ -1,0 +1,15 @@
+{
+  "name": "mauromotion-engine",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "python main.py",
+    "start": "uvicorn main:app --host 0.0.0.0 --port 8000",
+    "setup": "pip install -r requirements.txt"
+  },
+  "dependencies": {
+    "fastapi": "^0.115.0",
+    "uvicorn": "^0.30.0",
+    "pydantic": "^2.9.0"
+  }
+}
