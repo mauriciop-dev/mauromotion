@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && echo 'Build completed successfully'",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postinstall": "prisma generate --skip-generate"
   },
   "dependencies": {
     "next": "15.2.4",
@@ -36,6 +37,7 @@
     "typescript": "^5.5.0"
   },
   "engines": {
+    "node": ">=18.0.0",
     "pnpm": ">=9.0.0"
   }
 }
