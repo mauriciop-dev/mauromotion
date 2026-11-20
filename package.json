@@ -1,19 +1,41 @@
 {
   "name": "mauromotion",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@9.0.0",
   "scripts": {
-    "dev": "pnpm --filter web dev",
-    "dev:backend": "cd services/engine && python main.py",
-    "dev:all": "concurrently \"pnpm --filter web dev\" \"python services/engine/main.py\"",
-    "build": "pnpm --filter web build",
-    "setup:backend": "python setup-backend.py",
-    "install:all": "pnpm install",
-    "clean": "Remove-Item -Recurse -Force node_modules pnpm-lock.yaml apps/web/node_modules",
-    "git:push": "git add . && git commit -m \"Update\" && git push"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "clean": "rm -rf node_modules pnpm-lock.yaml .next"
+  },
+  "dependencies": {
+    "next": "15.2.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "@hookform/resolvers": "^3.3.0",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.445.0",
+    "tailwind-merge": "^3.2.0",
+    "zustand": "^4.5.0",
+    "zod": "^3.23.0",
+    "@insforge/sdk": "^1.0.0",
+    "@radix-ui/react-label": "^2.0.0",
+    "@radix-ui/react-slider": "^1.2.0",
+    "@radix-ui/react-select": "^2.4.0",
+    "@radix-ui/react-checkbox": "^1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@types/react": "^18.3.0",
+    "@types/node": "^22.0.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "3.4.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
   }
 }
