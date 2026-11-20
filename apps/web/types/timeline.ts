@@ -58,11 +58,7 @@ export interface TimelineState {
   timeline: {
     tracks: TimelineTrack[];
   };
-  media?: {
-    videoUrl?: string;
-    transcription?: TranscriptionWord[];
-    trackingData?: TrackingPoint[];
-  };
+  media?: ProjectMedia;
 }
 
 export interface TranscriptionWord {
@@ -70,6 +66,14 @@ export interface TranscriptionWord {
   start: number;
   end: number;
   confidence: number;
+  highlighted?: boolean;
+}
+
+export interface ProjectMedia {
+  videoUrl?: string;
+  transcription?: TranscriptionWord[];
+  trackingData?: TrackingPoint[];
+  avatarUrl?: string;
 }
 
 export interface TrackingPoint {

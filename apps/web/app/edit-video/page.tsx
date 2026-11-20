@@ -12,7 +12,7 @@ export default function EditVideoPage() {
   const [projectId, setProjectId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const { mode, setMode, updateTrack } = useTimelineStore();
+  const { mode, setMode, updateTrack, setMedia } = useTimelineStore();
 
   const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,6 +55,23 @@ export default function EditVideoPage() {
         type: 'video',
         items: [{ id: 'v1', start: 0, end: 60, src: previewUrl }]
       });
+      
+      // Procesar video con WhisperX + MediaPipe
+      const processRes = await fetch(`${ENGINE_URL}/process-video`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ video_url: previewUrl })
+      });
+      
+      if (processRes.ok) {
+        const processData = await processRes.json();
+        setMedia({
+          videoUrl: previewUrl,
+          transcription: processData.transcription?.words || [],
+          trackingData: processData.tracking_data?.frames || [],
+        });
+        setProjectId(processData.project_id);
+      }
 
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al subir el video');

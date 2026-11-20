@@ -26,8 +26,6 @@ logs
 .idea/
 *.swp
 *.suo
-*.tsc-cache
-*.tsbuildinfo
 
 # OS
 .DS_Store
@@ -47,3 +45,14 @@ pip-delete-this-directory.txt
 
 # InsForge
 .insforge/
+
+# Media files (videos)
+*.mp4
+*.mov
+*.avi
+
+# Temp files
+*.tmp
+*.temp
+tmp/
+temp/

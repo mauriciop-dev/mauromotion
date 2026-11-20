@@ -6,6 +6,7 @@ import {
   TimelineConfig,
   TimelineTrack,
   StoryboardScene,
+  ProjectMedia,
 } from '../types/timeline';
 
 const DEFAULT_CONFIG: TimelineConfig = {
@@ -21,16 +22,20 @@ const DEFAULT_CONFIG: TimelineConfig = {
 interface TimelineStore extends TimelineState {
   setMode: (mode: MuroMotionMode) => void;
   setConfig: (config: Partial<TimelineConfig>) => void;
+  setMedia: (media: ProjectMedia | undefined) => void;
   addTrack: (track: TimelineTrack) => void;
   removeTrack: (trackId: string) => void;
   updateTrack: (track: TimelineTrack) => void;
   addStoryboardScene: (scene: StoryboardScene) => void;
   updateStoryboardScene: (sceneId: string, scene: Partial<StoryboardScene>) => void;
+  removeStoryboardScene: (sceneId: string) => void;
+  setStoryboard: (scenes: StoryboardScene[]) => void;
   resetProject: () => void;
   duplicateProject: () => string;
   uploadVideo: (file: File) => Promise<string>;
-  processVideo: (projectId: string) => Promise<void>;
+  processVideo: (projectId: string, videoUrl?: string) => Promise<any>;
   generateFromPrompt: (prompt: string) => Promise<string>;
+  saveToInsForge: () => Promise<string>;
 }
 
 const ENGINE_URL = process.env.NEXT_PUBLIC_ENGINE_URL || 'http://localhost:8000';
@@ -70,6 +75,7 @@ export const useTimelineStore = create<TimelineStore>()(
           set((state) => ({
             config: { ...state.config, ...config },
           })),
+        setMedia: (media) => set({ media }),
         addTrack: (track) =>
           set((state) => ({
             timeline: {
@@ -103,6 +109,12 @@ export const useTimelineStore = create<TimelineStore>()(
               scene.sceneId === sceneId ? { ...scene, ...updates } : scene,
             ),
           })),
+        removeStoryboardScene: (sceneId) =>
+          set((state) => ({
+            storyboard: state.storyboard.filter((scene) => scene.sceneId !== sceneId),
+          })),
+        setStoryboard: (scenes) =>
+          set({ storyboard: scenes }),
         resetProject: () =>
           set({
             projectId: `project-${Date.now()}`,
@@ -172,18 +184,49 @@ export const useTimelineStore = create<TimelineStore>()(
           }
         },
         
-        processVideo: async (projectId) => {
+        processVideo: async (projectId, videoUrl?: string) => {
           try {
             const response = await fetch(`${ENGINE_URL}/process-video`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ project_id: projectId }),
+              body: JSON.stringify({ 
+                project_id: projectId,
+                video_url: videoUrl
+              }),
             });
             
             const data = await response.json();
-            console.log('Processing result:', data);
+            
+            // Actualizar el store con la transcripción y tracking
+            if (data.transcription || data.tracking_data) {
+              set((state) => ({
+                media: {
+                  ...state.media,
+                  transcription: data.transcription?.words || state.media?.transcription,
+                  trackingData: data.tracking_data?.frames || state.media?.trackingData,
+                },
+                timeline: {
+                  ...state.timeline,
+                  tracks: [{
+                    id: 'track-captions',
+                    label: 'Subtítulos Dinámicos',
+                    type: 'captions',
+                    items: (data.transcription?.words || []).map((w: any, i: number) => ({
+                      id: `c${i}`,
+                      start: w.start,
+                      end: w.end,
+                      text: w.word,
+                      highlight: w.highlighted || false,
+                    }))
+                  }]
+                }
+              }));
+            }
+            
+            return data;
           } catch (error) {
             console.error('Error processing video:', error);
+            throw error;
           }
         },
         
@@ -191,13 +234,27 @@ export const useTimelineStore = create<TimelineStore>()(
           const projectId = `project-${Date.now()}`;
           
           try {
-            // This would call the AI generation API
+            // Llamada a IA para generar storyboard (placeholder)
+            // En producción integrar con OpenRouter
             console.log('Generating from prompt:', prompt);
           } catch (error) {
             console.error('Error generating from prompt:', error);
           }
           
           return projectId;
+        },
+        
+        // Nuevas acciones: sincronización con InsForge
+        saveToInsForge: async () => {
+          const state = get();
+          // En producción, usar insforge.ts para guardar
+          // await createProjectInInsForge({
+          //   title: state.projectId,
+          //   type: state.mode.toLowerCase().includes('video') ? 'video' : 'web',
+          //   mode: state.mode,
+          //   config: state.config,
+          // });
+          return state.projectId;
         },
       }),
       {

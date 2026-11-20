@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Trash2, Edit, Save, Shuffle, Lightbulb } from 'lucide-react';
 import { useTimelineStore } from '@/store/timelineStore';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, Button, Label, Textarea, Badge, Input, Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, Button, Label, Textarea, Badge, Input } from '@/components/ui';
 
 interface StoryboardScene {
   sceneId: string;
@@ -29,7 +29,7 @@ export function StoryboardEditor() {
   const [newSceneScript, setNewSceneScript] = useState('');
   const [newSceneDuration, setNewSceneDuration] = useState(5);
   
-  const { storyboard, addStoryboardScene, updateStoryboardScene } = useTimelineStore();
+  const { storyboard, addStoryboardScene, updateStoryboardScene, removeStoryboardScene } = useTimelineStore();
 
   const addScene = () => {
     const newScene: StoryboardScene = {
@@ -162,9 +162,7 @@ export function StoryboardEditor() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => {
-                          // Remove scene - would need a remove action in store
-                        }}
+                        onClick={() => removeStoryboardScene(scene.sceneId)}
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>
